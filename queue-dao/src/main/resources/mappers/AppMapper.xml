@@ -1,0 +1,67 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.app.dao.mapper.AppMapper">
+
+	<select id="count" parameterType="appDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_app` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="appDO" resultType="appDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`name`
+		  FROM `tb_app` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="appDO" resultType="appDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`name`
+		  FROM `tb_app` t
+		 WHERE t.`is_deleted` = 0
+           AND t.`id` = #{id}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="appDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_app`
+		  (
+			`name`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{name},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="appDO">
+	<![CDATA[
+		UPDATE `tb_app` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`name` = #{name}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

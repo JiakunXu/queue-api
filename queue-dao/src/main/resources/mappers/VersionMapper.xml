@@ -1,0 +1,80 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.version.dao.mapper.VersionMapper">
+
+	<select id="count" parameterType="versionDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_version` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="versionDO" resultType="versionDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`app_id` AS appId,
+			   t.`client`,
+			   t.`url`
+		  FROM `tb_version` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="versionDO" resultType="versionDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`app_id` AS appId,
+			   t.`client`,
+			   t.`url`
+		  FROM `tb_version` t
+		 WHERE t.`is_deleted` = 0
+  	]]>
+		<if test="appId != null">
+		<![CDATA[ AND t.`app_id` = #{appId} ]]>
+		</if>
+		<if test="client != null and client != ''">
+		<![CDATA[ AND t.`client` = #{client} ]]>
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="versionDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_version`
+		  (
+			`app_id`,
+			`client`,
+			`url`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{appId},
+			#{client},
+			#{url},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="versionDO">
+	<![CDATA[
+		UPDATE `tb_version` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`url` = #{url}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

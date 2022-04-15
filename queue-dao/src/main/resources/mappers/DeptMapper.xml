@@ -1,0 +1,103 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.dept.dao.mapper.DeptMapper">
+
+	<select id="count" parameterType="deptDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_dept` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="deptDO" resultType="deptDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`pid`,
+			   t.`code`,
+			   t.`name`,
+			   t.`dept_style_id` AS deptStyleId,
+			   t.`dept_voice_id` AS deptVoiceId,
+			   t.`room_style_id` AS roomStyleId
+		  FROM `tb_dept` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="deptDO" resultType="deptDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`pid`,
+			   t.`code`,
+			   t.`name`,
+			   t.`dept_style_id` AS deptStyleId,
+			   t.`dept_voice_id` AS deptVoiceId,
+			   t.`room_style_id` AS roomStyleId
+		  FROM `tb_dept` t
+		 WHERE t.`is_deleted` = 0
+           AND t.`id` = #{id}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="deptDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_dept`
+		  (
+			`pid`,
+			`code`,
+			`name`,
+			`dept_style_id`,
+			`dept_voice_id`,
+			`room_style_id`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{pid},
+			#{code},
+			#{name},
+			#{deptStyleId},
+			#{deptVoiceId},
+			#{roomStyleId},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="deptDO">
+	<![CDATA[
+		UPDATE `tb_dept` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`pid` = #{pid},
+			   t.`code` = #{code},
+			   t.`name` = #{name},
+			   t.`dept_style_id` = #{deptStyleId},
+			   t.`dept_voice_id` = #{deptVoiceId},
+			   t.`room_style_id` = #{roomStyleId}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="deptDO">
+	<![CDATA[
+		UPDATE `tb_dept` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

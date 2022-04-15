@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.queue.dao.mapper.QueueDetailMapper">
+
+	<select id="count" parameterType="queueDetailDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_queue_detail` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`queue_id` = #{queueId}
+	]]>
+	</select>
+
+	<select id="list" parameterType="queueDetailDO" resultType="queueDetailDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`queue_id` AS queueId,
+			   t.`room_id` AS roomId,
+			   t.`patient_id` AS patientId,
+			   t.`patient_name` AS patientName,
+			   t.`no`,
+			   t.`status`
+		  FROM `tb_queue_detail` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`queue_id` = #{queueId}
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="queueDetailDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_queue_detail`
+		  (
+			`queue_id`,
+			`room_id`,
+			`patient_id`,
+			`patient_name`,
+			`no`,
+			`status`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{queueId},
+			#{roomId},
+			#{patientId},
+			#{patientName},
+			#{no},
+			#{status},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="queueDetailDO">
+	<![CDATA[
+		UPDATE `tb_queue_detail` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`status` = #{status}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

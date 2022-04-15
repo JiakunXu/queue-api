@@ -1,0 +1,96 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.client.dao.mapper.ClientMapper">
+
+	<select id="count" parameterType="clientDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_client` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="clientDO" resultType="clientDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`ip`,
+			   t.`scene`,
+			   t.`scene_id` AS sceneId,
+			   t.`status`
+		  FROM `tb_client` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="clientDO" resultType="clientDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`ip`,
+			   t.`scene`,
+			   t.`scene_id` AS sceneId,
+			   t.`status`
+		  FROM `tb_client` t
+		 WHERE t.`is_deleted` = 0
+           AND t.`ip` = #{ip}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="clientDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_client`
+		  (
+			`code`,
+			`name`,
+			`ip`,
+			`status`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{code},
+			#{name},
+			#{ip},
+			#{status},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="clientDO">
+	<![CDATA[
+		UPDATE `tb_client` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`code` = #{code},
+			   t.`name` = #{name},
+			   t.`ip` = #{ip}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="clientDO">
+	<![CDATA[
+		UPDATE `tb_client` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

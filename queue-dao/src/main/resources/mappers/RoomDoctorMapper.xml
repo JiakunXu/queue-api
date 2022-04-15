@@ -1,0 +1,51 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.room.dao.mapper.RoomDoctorMapper">
+
+	<select id="count" parameterType="roomDoctorDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_room_doctor` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`room_id` = #{roomId}
+	]]>
+	</select>
+
+	<select id="list" parameterType="roomDoctorDO" resultType="roomDoctorDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`room_id` AS roomId,
+			   t.`doctor_id` AS doctorId
+		  FROM `tb_room_doctor` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`room_id` = #{roomId}
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="roomDoctorDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_room_doctor`
+		  (
+			`room_id`,
+			`doctor_id`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{roomId},
+			#{doctorId},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+</mapper>

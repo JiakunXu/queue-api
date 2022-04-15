@@ -1,0 +1,93 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.config.dao.mapper.StyleMapper">
+
+	<select id="count" parameterType="styleDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_style` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="styleDO" resultType="styleDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`url`,
+			   t.`content`
+		  FROM `tb_style` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="styleDO" resultType="styleDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`url`,
+			   t.`content`
+		  FROM `tb_style` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="styleDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_style`
+		  (
+			`code`,
+			`name`,
+			`url`,
+			`content`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{code},
+			#{name},
+			#{url},
+			#{content},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="styleDO">
+	<![CDATA[
+		UPDATE `tb_style` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`code` = #{code},
+			   t.`name` = #{name},
+			   t.`url` = #{url},
+			   t.`content` = #{content}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="styleDO">
+	<![CDATA[
+		UPDATE `tb_style` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

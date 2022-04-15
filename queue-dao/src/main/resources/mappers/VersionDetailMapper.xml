@@ -1,0 +1,91 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.version.dao.mapper.VersionDetailMapper">
+
+	<select id="count" parameterType="versionDetailDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_version_detail` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="versionDetailDO" resultType="versionDetailDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`version_id` AS versionId,
+			   t.`version`,
+			   t.`status`
+		  FROM `tb_version_detail` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="versionDetailDO" resultType="versionDetailDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`version_id` AS versionId,
+			   t.`version`,
+			   t.`status`
+		  FROM `tb_version_detail` t
+		 WHERE t.`is_deleted` = 0
+  	]]>
+		<if test="versionId != null">
+		<![CDATA[ AND t.`version_id` = #{versionId} ]]>
+		</if>
+		<if test="version != null and version != ''">
+		<![CDATA[ AND t.`version` = #{version} ]]>
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="versionDetailDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_version_detail`
+		  (
+			`version_id`,
+			`version`,
+			`status`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{versionId},
+			#{version},
+			#{status},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="versionDetailDO">
+	<![CDATA[
+		UPDATE `tb_version_detail` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`status` = #{status}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="versionDetailDO">
+	<![CDATA[
+		UPDATE `tb_version_detail` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

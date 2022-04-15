@@ -1,0 +1,92 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.dict.dao.mapper.DictTypeMapper">
+
+	<select id="count" parameterType="dictTypeDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_dict_type` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="dictTypeDO" resultType="dictTypeDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`name`,
+			   t.`value`,
+			   t.`remark`
+		  FROM `tb_dict_type` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="dictTypeDO" resultType="dictTypeDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`name`,
+			   t.`value`,
+			   t.`remark`
+		  FROM `tb_dict_type` t
+		 WHERE t.`is_deleted` = 0
+  	]]>
+		<if test="id != null">
+		<![CDATA[ AND t.`id` = #{id} ]]>
+		</if>
+		<if test="value != null and value != ''">
+		<![CDATA[ AND t.`value` = #{value} ]]>
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="dictTypeDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_dict_type`
+		  (
+			`name`,
+			`value`,
+			`remark`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{name},
+			#{value},
+			#{remark},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="dictTypeDO">
+	<![CDATA[
+		UPDATE `tb_dict_type` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`name` = #{name},
+			   t.`remark` = #{remark}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="dictTypeDO">
+	<![CDATA[
+		UPDATE `tb_dict_type` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

@@ -1,0 +1,88 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.config.dao.mapper.VoiceMapper">
+
+	<select id="count" parameterType="voiceDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_voice` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="voiceDO" resultType="voiceDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`content`
+		  FROM `tb_voice` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="voiceDO" resultType="voiceDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`content`
+		  FROM `tb_voice` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="voiceDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_voice`
+		  (
+			`code`,
+			`name`,
+			`content`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{code},
+			#{name},
+			#{content},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="voiceDO">
+	<![CDATA[
+		UPDATE `tb_voice` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`code` = #{code},
+			   t.`name` = #{name},
+			   t.`content` = #{content}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="voiceDO">
+	<![CDATA[
+		UPDATE `tb_voice` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

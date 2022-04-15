@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.queue.dao.mapper.QueueMapper">
+
+	<select id="count" parameterType="queueDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_queue` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="queueDO" resultType="queueDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`dept_id` AS deptId,
+			   t.`signed_no` AS signedNo,
+			   t.`status`
+		  FROM `tb_queue` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="queueDO" resultType="queueDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`dept_id` AS deptId,
+			   t.`signed_no` AS signedNo,
+			   t.`status`
+		  FROM `tb_queue` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`dept_id` = #{deptId}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="queueDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_queue`
+		  (
+			`dept_id`,
+			`signed_no`,
+			`status`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{deptId},
+			#{signedNo},
+			#{status},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+</mapper>

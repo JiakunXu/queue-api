@@ -1,0 +1,69 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.queue.dao.mapper.QueueRuleMapper">
+
+	<select id="list" parameterType="queueRuleDO" resultType="queueRuleDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`queue_id` AS queueId,
+			   t.`rule_id` AS ruleId,
+			   t.`rule_code` AS ruleCode,
+			   t.`value`
+		  FROM `tb_queue_rule` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`queue_id` = #{queueId}
+		 ORDER BY t.`id` DESC
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="queueRuleDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_queue_rule`
+		  (
+			`queue_id`,
+			`rule_id`,
+			`rule_code`,
+			`value`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{queueId},
+			#{ruleId},
+			#{ruleCode},
+			#{value},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="queueRuleDO">
+	<![CDATA[
+		UPDATE `tb_queue_rule` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`value` = #{value}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="queueRuleDO">
+	<![CDATA[
+		UPDATE `tb_queue_rule` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

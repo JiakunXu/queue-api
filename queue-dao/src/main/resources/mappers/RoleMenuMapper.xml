@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.role.dao.mapper.RoleMenuMapper">
+
+	<select id="list" parameterType="roleMenuDO" resultType="roleMenuDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`role_id` AS roleId,
+			   t.`menu_id` AS menuId
+		  FROM `tb_role_menu` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`role_id` = #{roleId}
+		 ORDER BY t.`id` DESC
+	]]>
+	</select>
+
+	<update id="delete" parameterType="roleMenuDO">
+	<![CDATA[
+		UPDATE `tb_role_menu` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+	]]>
+		<if test="roleId != null">
+		<![CDATA[ AND t.`role_id` = #{roleId} ]]>
+		</if>
+		<if test="roleId == null">
+		<![CDATA[ AND t.`menu_id` = #{menuId} ]]>
+		</if>
+	</update>
+
+</mapper>

@@ -1,0 +1,61 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.tunnel.dao.mapper.TunnelMapper">
+
+	<select id="count" parameterType="tunnelDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_tunnel` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`client_id` = #{clientId}
+	]]>
+	</select>
+
+	<select id="list" parameterType="tunnelDO" resultType="tunnelDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`client_id` AS clientId,
+			   t.`tunnel_id` AS tunnelId
+		  FROM `tb_tunnel` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`client_id` = #{clientId}
+		 ORDER BY t.`id` DESC
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="tunnelDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_tunnel`
+		  (
+			`client_id`,
+			`tunnel_id`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{clientId},
+			#{tunnelId},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="delete" parameterType="tunnelDO">
+	<![CDATA[
+		UPDATE `tb_tunnel` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`tunnel_id` = #{tunnelId}
+	]]>
+	</update>
+
+</mapper>

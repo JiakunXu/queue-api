@@ -1,0 +1,58 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.queue.dao.mapper.QueueTemplateMapper">
+
+	<select id="get" parameterType="queueTemplateDO" resultType="queueTemplateDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`queue_id` AS queueId,
+			   t.`template_id` AS templateId
+		  FROM `tb_queue_template` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`queue_id` = #{queueId}
+		 ORDER BY t.`id` DESC
+		 LIMIT 1
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="queueTemplateDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_queue_template`
+		  (
+			`queue_id`,
+			`template_id`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{queueId},
+			#{templateId},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="delete" parameterType="queueTemplateDO">
+	<![CDATA[
+		UPDATE `tb_queue_template` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+	]]>
+		<if test="queueId != null">
+		<![CDATA[ AND t.`queue_id` = #{queueId} ]]>
+		</if>
+		<if test="queueId == null">
+		<![CDATA[ AND t.`template_id` = #{templateId} ]]>
+		</if>
+	</update>
+
+</mapper>

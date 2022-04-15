@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.user.dao.mapper.UserDeptMapper">
+
+	<select id="count" parameterType="userDeptDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_user_dept` t
+		 WHERE t.`is_deleted` = 0
+           AND t.`dept_id` = #{deptId}
+	]]>
+	</select>
+
+	<select id="list" parameterType="userDeptDO" resultType="userDeptDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`user_id` AS userId,
+			   t.`dept_id` AS deptId
+		  FROM `tb_user_dept` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+		<if test="userId != null">
+		<![CDATA[ AND t.`user_id` = #{userId} ]]>
+		</if>
+		<if test="deptId != null">
+		<![CDATA[ AND t.`dept_id` = #{deptId} ]]>
+		</if>
+	<![CDATA[
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<update id="delete" parameterType="userDeptDO">
+	<![CDATA[
+		UPDATE `tb_user_dept` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`dept_id` = #{deptId}
+	]]>
+	</update>
+
+</mapper>

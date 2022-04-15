@@ -1,0 +1,76 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.schedule.dao.mapper.ScheduleMapper">
+
+	<select id="list" parameterType="scheduleDO" resultType="scheduleDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`dept_id` AS deptId,
+			   t.`code`,
+			   t.`date`,
+			   t.`time`,
+			   t.`doctor_id` AS doctorId,
+			   t.`max_no` AS maxNo
+		  FROM `tb_schedule` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`dept_id` = #{deptId}
+		 ORDER BY t.`date`
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="scheduleDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_schedule`
+		  (
+			`dept_id`,
+			`code`,
+			`date`,
+			`time`,
+			`doctor_id`,
+			`max_no`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{deptId},
+			#{code},
+			#{date},
+			#{time},
+			#{doctorId},
+			#{maxNo},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="scheduleDO">
+	<![CDATA[
+		UPDATE `tb_schedule` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`doctor_id` = #{doctorId},
+			   t.`max_no` = #{maxNo}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="scheduleDO">
+	<![CDATA[
+		UPDATE `tb_schedule` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

@@ -1,0 +1,101 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.notice.dao.mapper.NoticeMapper">
+
+	<select id="count" parameterType="noticeDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_notice` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="noticeDO" resultType="noticeDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`dept_id` AS deptId,
+			   t.`start_time` AS startTime,
+			   t.`end_time` AS endTime,
+			   t.`content`,
+			   t.`source`
+		  FROM `tb_notice` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="noticeDO" resultType="noticeDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`dept_id` AS deptId,
+			   t.`start_time` AS startTime,
+			   t.`end_time` AS endTime,
+			   t.`content`,
+			   t.`source`
+		  FROM `tb_notice` t
+		 WHERE t.`is_deleted` = 0
+           AND t.`start_time` < NOW()
+           AND t.`end_time` > NOW()
+           AND t.`dept_id` = #{deptId}
+		 LIMIT 1
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="noticeDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_notice`
+		  (
+			`dept_id`,
+			`start_time`,
+			`end_time`,
+			`content`,
+			`source`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{deptId},
+			#{startTime},
+			#{endTime},
+			#{content},
+			#{source},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="noticeDO">
+	<![CDATA[
+		UPDATE `tb_notice` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`dept_id` = #{deptId},
+			   t.`start_time` = #{startTime},
+			   t.`end_time` = #{endTime},
+			   t.`content` = #{content},
+			   t.`source` = #{source}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="noticeDO">
+	<![CDATA[
+		UPDATE `tb_notice` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

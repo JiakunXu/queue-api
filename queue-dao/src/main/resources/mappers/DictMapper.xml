@@ -1,0 +1,120 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.dict.dao.mapper.DictMapper">
+
+	<select id="list" parameterType="dictDO" resultType="dictDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`dict_type_id` as dictTypeId,
+			   t.`dict_type_value` as dictTypeValue,
+			   t.`name`,
+			   t.`value`,
+			   t.`remark`
+		  FROM `tb_dict` t
+		 WHERE t.`is_deleted` = 0
+  	]]>
+		<if test="dictTypeId != null">
+		<![CDATA[ AND t.`dict_type_id` = #{dictTypeId} ]]>
+		</if>
+		<if test="dictTypeValue != null and dictTypeValue != ''">
+		<![CDATA[ AND t.`dict_type_value` = #{dictTypeValue} ]]>
+		</if>
+	<![CDATA[
+		 ORDER BY t.`id` DESC
+	]]>
+	</select>
+
+	<select id="get" parameterType="dictDO" resultType="dictDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`dict_type_id` as dictTypeId,
+			   t.`dict_type_value` as dictTypeValue,
+			   t.`name`,
+			   t.`value`,
+			   t.`remark`
+		  FROM `tb_dict` t
+		 WHERE t.`is_deleted` = 0
+  	]]>
+		<if test="dictTypeValue != null and dictTypeValue != ''">
+		<![CDATA[ AND t.`dict_type_value` = #{dictTypeValue} ]]>
+		</if>
+		<if test="dictValue != null and dictValue != ''">
+		<![CDATA[ AND t.`dict_value` = #{dictValue} ]]>
+		</if>
+	<![CDATA[
+		 ORDER BY t.`id` DESC
+		 LIMIT 1
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="dictDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_dict`
+		  (
+			`dict_type_id`,
+			`dict_type_value`,
+			`name`,
+			`value`,
+			`remark`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{dictTypeId},
+			#{dictTypeValue},
+			#{name},
+			#{value},
+			#{remark},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update0" parameterType="dictDO">
+	<![CDATA[
+		UPDATE `tb_dict` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`name` = #{name},
+			   t.`value` = #{value},
+			   t.`remark` = #{remark}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="update1" parameterType="dictDO">
+	<![CDATA[
+		UPDATE `tb_dict` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`dict_type_value` = #{dictTypeValue}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`dict_type_id` = #{dictTypeId}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="dictDO">
+	<![CDATA[
+		UPDATE `tb_dict` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+	]]>
+		<if test="id != null">
+		<![CDATA[ AND t.`id` = #{id} ]]>
+		</if>
+		<if test="id == null">
+		<![CDATA[ AND t.`dict_type_id` = #{dictTypeId} ]]>
+		</if>
+	</update>
+
+</mapper>

@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.menu.dao.mapper.MenuMapper">
+
+	<select id="list" parameterType="menuDO" resultType="menuDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`pid`,
+			   t.`name`
+		  FROM `tb_menu` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`pid` = #{pid}
+		 ORDER BY t.`id` DESC
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="menuDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_menu`
+		  (
+			`pid`,
+			`name`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{pid},
+			#{name},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="menuDO">
+	<![CDATA[
+		UPDATE `tb_menu` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`pid` = #{pid},
+			   t.`name` = #{name}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="menuDO">
+	<![CDATA[
+		UPDATE `tb_menu` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

@@ -1,0 +1,88 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.template.dao.mapper.TemplateMapper">
+
+	<select id="count" parameterType="templateDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_template` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="templateDO" resultType="templateDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`template_id` AS templateId,
+			   t.`name`,
+			   t.`content`
+		  FROM `tb_template` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="templateDO" resultType="templateDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`template_id` AS templateId,
+			   t.`name`,
+			   t.`content`
+		  FROM `tb_template` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="templateDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_template`
+		  (
+			`template_id`,
+			`name`,
+			`content`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{templateId},
+			#{name},
+			#{content},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="templateDO">
+	<![CDATA[
+		UPDATE `tb_template` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`template_id` = #{templateId},
+			   t.`name` = #{name},
+			   t.`content` = #{content}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+	<update id="delete" parameterType="templateDO">
+	<![CDATA[
+		UPDATE `tb_template` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`is_deleted` = 1
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>

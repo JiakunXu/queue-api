@@ -1,0 +1,77 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.queue.patient.dao.mapper.PatientMapper">
+
+	<select id="count" parameterType="patientDO" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(*)
+		  FROM `tb_patient` t
+		 WHERE t.`is_deleted` = 0
+	]]>
+	</select>
+
+	<select id="list" parameterType="patientDO" resultType="patientDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`member_id` AS memberId
+		  FROM `tb_patient` t
+		 WHERE t.`is_deleted` = 0
+		 ORDER BY t.`id` DESC
+		 LIMIT #{offset}, #{pageSize}
+	]]>
+	</select>
+
+	<select id="get" parameterType="patientDO" resultType="patientDO">
+	<![CDATA[
+		SELECT t.`id`,
+			   t.`code`,
+			   t.`name`,
+			   t.`member_id` AS memberId
+		  FROM `tb_patient` t
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</select>
+
+	<insert id="insert" parameterType="patientDO" useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT
+		INTO `tb_patient`
+		  (
+			`code`,
+			`name`,
+			`member_id`,
+			`is_deleted`,
+			`creator`,
+			`create_time`
+		  )
+		  VALUES
+		  (
+			#{code},
+			#{name},
+			#{memberId},
+			0,
+			#{creator},
+			NOW()
+		  )
+	]]>
+	</insert>
+
+	<update id="update" parameterType="patientDO">
+	<![CDATA[
+		UPDATE `tb_patient` t
+		   SET t.`update_time` = NOW(),
+			   t.`modifier` = #{modifier},
+			   t.`code` = #{code},
+			   t.`name` = #{name},
+			   t.`member_id` = #{memberId}
+		 WHERE t.`is_deleted` = 0
+		   AND t.`id` = #{id}
+	]]>
+	</update>
+
+</mapper>
