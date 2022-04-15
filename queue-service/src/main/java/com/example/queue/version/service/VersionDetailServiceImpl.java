@@ -1,6 +1,5 @@
 package com.example.queue.version.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -81,7 +80,7 @@ public class VersionDetailServiceImpl implements VersionDetailService {
         try {
             versionDetailMapper.insert(versionDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(versionDetailDO), e);
+            logger.error(versionDetailDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -106,7 +105,7 @@ public class VersionDetailServiceImpl implements VersionDetailService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(versionDetailDO), e);
+            logger.error(versionDetailDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -126,7 +125,7 @@ public class VersionDetailServiceImpl implements VersionDetailService {
         try {
             versionDetailMapper.delete(versionDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(versionDetailDO), e);
+            logger.error(versionDetailDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -137,7 +136,7 @@ public class VersionDetailServiceImpl implements VersionDetailService {
         try {
             return versionDetailMapper.count(versionDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(versionDetailDO), e);
+            logger.error(versionDetailDO.toString(), e);
         }
 
         return 0;
@@ -147,7 +146,7 @@ public class VersionDetailServiceImpl implements VersionDetailService {
         try {
             return versionDetailMapper.list(versionDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(versionDetailDO), e);
+            logger.error(versionDetailDO.toString(), e);
         }
 
         return null;
@@ -157,7 +156,7 @@ public class VersionDetailServiceImpl implements VersionDetailService {
         try {
             return versionDetailMapper.get(versionDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(versionDetailDO), e);
+            logger.error(versionDetailDO.toString(), e);
         }
 
         return null;

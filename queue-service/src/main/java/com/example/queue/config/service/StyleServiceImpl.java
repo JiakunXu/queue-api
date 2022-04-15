@@ -1,6 +1,5 @@
 package com.example.queue.config.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.config.api.StyleService;
 import com.example.queue.config.api.bo.Style;
 import com.example.queue.config.dao.dataobject.StyleDO;
@@ -76,7 +75,7 @@ public class StyleServiceImpl implements StyleService {
         try {
             styleMapper.insert(styleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(styleDO), e);
+            logger.error(styleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -103,7 +102,7 @@ public class StyleServiceImpl implements StyleService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(styleDO), e);
+            logger.error(styleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -123,7 +122,7 @@ public class StyleServiceImpl implements StyleService {
         try {
             styleMapper.delete(styleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(styleDO), e);
+            logger.error(styleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -134,7 +133,7 @@ public class StyleServiceImpl implements StyleService {
         try {
             return styleMapper.count(styleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(styleDO), e);
+            logger.error(styleDO.toString(), e);
         }
 
         return 0;
@@ -144,7 +143,7 @@ public class StyleServiceImpl implements StyleService {
         try {
             return styleMapper.list(styleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(styleDO), e);
+            logger.error(styleDO.toString(), e);
         }
 
         return null;
@@ -154,7 +153,7 @@ public class StyleServiceImpl implements StyleService {
         try {
             return styleMapper.get(styleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(styleDO), e);
+            logger.error(styleDO.toString(), e);
         }
 
         return null;

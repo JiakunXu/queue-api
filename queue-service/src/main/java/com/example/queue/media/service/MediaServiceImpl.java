@@ -1,6 +1,5 @@
 package com.example.queue.media.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -76,7 +75,7 @@ public class MediaServiceImpl implements MediaService {
         try {
             mediaMapper.insert(mediaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(mediaDO), e);
+            logger.error(mediaDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -103,7 +102,7 @@ public class MediaServiceImpl implements MediaService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(mediaDO), e);
+            logger.error(mediaDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -123,7 +122,7 @@ public class MediaServiceImpl implements MediaService {
         try {
             mediaMapper.delete(mediaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(mediaDO), e);
+            logger.error(mediaDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -134,7 +133,7 @@ public class MediaServiceImpl implements MediaService {
         try {
             return mediaMapper.count(mediaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(mediaDO), e);
+            logger.error(mediaDO.toString(), e);
         }
 
         return 0;
@@ -144,7 +143,7 @@ public class MediaServiceImpl implements MediaService {
         try {
             return mediaMapper.list(mediaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(mediaDO), e);
+            logger.error(mediaDO.toString(), e);
         }
 
         return null;
@@ -154,7 +153,7 @@ public class MediaServiceImpl implements MediaService {
         try {
             return mediaMapper.get(mediaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(mediaDO), e);
+            logger.error(mediaDO.toString(), e);
         }
 
         return null;

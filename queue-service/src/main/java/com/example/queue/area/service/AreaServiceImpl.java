@@ -1,6 +1,5 @@
 package com.example.queue.area.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.area.api.AreaService;
 import com.example.queue.area.api.bo.Area;
 import com.example.queue.area.dao.dataobject.AreaDO;
@@ -76,7 +75,7 @@ public class AreaServiceImpl implements AreaService {
         try {
             areaMapper.insert(areaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(areaDO), e);
+            logger.error(areaDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -103,7 +102,7 @@ public class AreaServiceImpl implements AreaService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(areaDO), e);
+            logger.error(areaDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -123,7 +122,7 @@ public class AreaServiceImpl implements AreaService {
         try {
             areaMapper.delete(areaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(areaDO), e);
+            logger.error(areaDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -136,7 +135,7 @@ public class AreaServiceImpl implements AreaService {
         try {
             return areaMapper.count(areaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(areaDO), e);
+            logger.error(areaDO.toString(), e);
         }
 
         return 0;
@@ -146,7 +145,7 @@ public class AreaServiceImpl implements AreaService {
         try {
             return areaMapper.list(areaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(areaDO), e);
+            logger.error(areaDO.toString(), e);
         }
 
         return null;
@@ -156,7 +155,7 @@ public class AreaServiceImpl implements AreaService {
         try {
             return areaMapper.get(areaDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(areaDO), e);
+            logger.error(areaDO.toString(), e);
         }
 
         return null;

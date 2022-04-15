@@ -1,6 +1,5 @@
 package com.example.queue.dept.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.cache.api.RedisService;
 import com.example.queue.dept.api.DeptService;
 import com.example.queue.dept.api.bo.Dept;
@@ -111,7 +110,7 @@ public class DeptServiceImpl implements DeptService {
         try {
             deptMapper.insert(deptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(deptDO), e);
+            logger.error(deptDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -138,7 +137,7 @@ public class DeptServiceImpl implements DeptService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(deptDO), e);
+            logger.error(deptDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -159,7 +158,7 @@ public class DeptServiceImpl implements DeptService {
         try {
             deptMapper.delete(deptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(deptDO), e);
+            logger.error(deptDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -172,7 +171,7 @@ public class DeptServiceImpl implements DeptService {
         try {
             return deptMapper.count(deptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(deptDO), e);
+            logger.error(deptDO.toString(), e);
         }
 
         return 0;
@@ -182,7 +181,7 @@ public class DeptServiceImpl implements DeptService {
         try {
             return deptMapper.list(deptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(deptDO), e);
+            logger.error(deptDO.toString(), e);
         }
 
         return null;
@@ -192,7 +191,7 @@ public class DeptServiceImpl implements DeptService {
         try {
             return deptMapper.get(deptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(deptDO), e);
+            logger.error(deptDO.toString(), e);
         }
 
         return null;

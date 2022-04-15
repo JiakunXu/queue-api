@@ -1,6 +1,5 @@
 package com.example.queue.member.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -74,7 +73,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             memberMapper.insert(memberDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(memberDO), e);
+            logger.error(memberDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -101,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(memberDO), e);
+            logger.error(memberDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -112,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             return memberMapper.count(memberDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(memberDO), e);
+            logger.error(memberDO.toString(), e);
         }
 
         return 0;
@@ -122,7 +121,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             return memberMapper.list(memberDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(memberDO), e);
+            logger.error(memberDO.toString(), e);
         }
 
         return null;
@@ -132,7 +131,7 @@ public class MemberServiceImpl implements MemberService {
         try {
             return memberMapper.get(memberDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(memberDO), e);
+            logger.error(memberDO.toString(), e);
         }
 
         return null;

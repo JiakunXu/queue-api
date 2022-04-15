@@ -1,6 +1,5 @@
 package com.example.queue.queue.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -78,7 +77,7 @@ public class QueueRuleServiceImpl implements QueueRuleService {
         try {
             queueRuleMapper.insert(queueRuleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueRuleDO), e);
+            logger.error(queueRuleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -103,7 +102,7 @@ public class QueueRuleServiceImpl implements QueueRuleService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueRuleDO), e);
+            logger.error(queueRuleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -123,7 +122,7 @@ public class QueueRuleServiceImpl implements QueueRuleService {
         try {
             queueRuleMapper.delete(queueRuleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueRuleDO), e);
+            logger.error(queueRuleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -134,7 +133,7 @@ public class QueueRuleServiceImpl implements QueueRuleService {
         try {
             return queueRuleMapper.list(queueRuleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueRuleDO), e);
+            logger.error(queueRuleDO.toString(), e);
         }
 
         return null;

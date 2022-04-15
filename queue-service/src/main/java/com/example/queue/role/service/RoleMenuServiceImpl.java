@@ -1,6 +1,5 @@
 package com.example.queue.role.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -54,7 +53,7 @@ public class RoleMenuServiceImpl implements RoleMenuService {
         try {
             roleMenuMapper.delete(roleMenuDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(roleMenuDO), e);
+            logger.error(roleMenuDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -65,7 +64,7 @@ public class RoleMenuServiceImpl implements RoleMenuService {
         try {
             return roleMenuMapper.list(roleMenuDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(roleMenuDO), e);
+            logger.error(roleMenuDO.toString(), e);
         }
 
         return null;

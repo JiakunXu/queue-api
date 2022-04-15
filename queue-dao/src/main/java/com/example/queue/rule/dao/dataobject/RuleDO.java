@@ -3,6 +3,7 @@ package com.example.queue.rule.dao.dataobject;
 import com.example.queue.framework.dataobject.BaseDO;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigInteger;
 
@@ -11,6 +12,7 @@ import java.math.BigInteger;
  */
 @Getter
 @Setter
+@ToString
 public class RuleDO extends BaseDO {
 
     private static final long serialVersionUID = -5815966335955377753L;

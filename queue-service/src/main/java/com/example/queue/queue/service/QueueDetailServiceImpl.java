@@ -1,6 +1,5 @@
 package com.example.queue.queue.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -69,7 +68,7 @@ public class QueueDetailServiceImpl implements QueueDetailService {
         try {
             queueDetailMapper.insert(queueDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDetailDO), e);
+            logger.error(queueDetailDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -96,7 +95,7 @@ public class QueueDetailServiceImpl implements QueueDetailService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDetailDO), e);
+            logger.error(queueDetailDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -107,7 +106,7 @@ public class QueueDetailServiceImpl implements QueueDetailService {
         try {
             return queueDetailMapper.count(queueDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDetailDO), e);
+            logger.error(queueDetailDO.toString(), e);
         }
 
         return 0;
@@ -117,7 +116,7 @@ public class QueueDetailServiceImpl implements QueueDetailService {
         try {
             return queueDetailMapper.list(queueDetailDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDetailDO), e);
+            logger.error(queueDetailDO.toString(), e);
         }
 
         return null;

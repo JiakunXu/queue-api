@@ -1,6 +1,5 @@
 package com.example.queue.menu.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -59,7 +58,7 @@ public class MenuServiceImpl implements MenuService {
         try {
             menuMapper.insert(menuDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(menuDO), e);
+            logger.error(menuDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -86,7 +85,7 @@ public class MenuServiceImpl implements MenuService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(menuDO), e);
+            logger.error(menuDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -107,7 +106,7 @@ public class MenuServiceImpl implements MenuService {
         try {
             menuMapper.delete(menuDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(menuDO), e);
+            logger.error(menuDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -120,7 +119,7 @@ public class MenuServiceImpl implements MenuService {
         try {
             return menuMapper.list(menuDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(menuDO), e);
+            logger.error(menuDO.toString(), e);
         }
 
         return null;

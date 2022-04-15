@@ -1,6 +1,5 @@
 package com.example.queue.client.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.client.api.ClientService;
 import com.example.queue.client.api.bo.Client;
 import com.example.queue.client.dao.dataobject.ClientDO;
@@ -87,7 +86,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             clientMapper.insert(clientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(clientDO), e);
+            logger.error(clientDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -114,7 +113,7 @@ public class ClientServiceImpl implements ClientService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(clientDO), e);
+            logger.error(clientDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -134,7 +133,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             clientMapper.delete(clientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(clientDO), e);
+            logger.error(clientDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -145,7 +144,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             return clientMapper.count(clientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(clientDO), e);
+            logger.error(clientDO.toString(), e);
         }
 
         return 0;
@@ -155,7 +154,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             return clientMapper.list(clientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(clientDO), e);
+            logger.error(clientDO.toString(), e);
         }
 
         return null;
@@ -165,7 +164,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             return clientMapper.get(clientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(clientDO), e);
+            logger.error(clientDO.toString(), e);
         }
 
         return null;

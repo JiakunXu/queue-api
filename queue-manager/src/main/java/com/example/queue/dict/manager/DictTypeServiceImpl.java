@@ -1,6 +1,5 @@
 package com.example.queue.dict.manager;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.cache.api.RedisService;
 import com.example.queue.dict.api.DictService;
 import com.example.queue.dict.api.DictTypeService;
@@ -124,7 +123,7 @@ public class DictTypeServiceImpl implements DictTypeService {
         try {
             dictTypeMapper.insert(dictTypeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictTypeDO), e);
+            logger.error(dictTypeDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -152,7 +151,7 @@ public class DictTypeServiceImpl implements DictTypeService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictTypeDO), e);
+            logger.error(dictTypeDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -175,7 +174,7 @@ public class DictTypeServiceImpl implements DictTypeService {
         try {
             dictTypeMapper.delete(dictTypeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictTypeDO), e);
+            logger.error(dictTypeDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -188,7 +187,7 @@ public class DictTypeServiceImpl implements DictTypeService {
         try {
             return dictTypeMapper.count(dictTypeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictTypeDO), e);
+            logger.error(dictTypeDO.toString(), e);
         }
 
         return 0;
@@ -198,7 +197,7 @@ public class DictTypeServiceImpl implements DictTypeService {
         try {
             return dictTypeMapper.list(dictTypeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictTypeDO), e);
+            logger.error(dictTypeDO.toString(), e);
         }
 
         return null;
@@ -208,7 +207,7 @@ public class DictTypeServiceImpl implements DictTypeService {
         try {
             return dictTypeMapper.get(dictTypeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictTypeDO), e);
+            logger.error(dictTypeDO.toString(), e);
         }
 
         return null;

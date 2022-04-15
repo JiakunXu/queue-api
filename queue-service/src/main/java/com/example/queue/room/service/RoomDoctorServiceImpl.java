@@ -1,6 +1,5 @@
 package com.example.queue.room.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -64,7 +63,7 @@ public class RoomDoctorServiceImpl implements RoomDoctorService {
         try {
             roomDoctorMapper.insert(roomDoctorDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(roomDoctorDO), e);
+            logger.error(roomDoctorDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -75,7 +74,7 @@ public class RoomDoctorServiceImpl implements RoomDoctorService {
         try {
             return roomDoctorMapper.count(roomDoctorDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(roomDoctorDO), e);
+            logger.error(roomDoctorDO.toString(), e);
         }
 
         return 0;
@@ -85,7 +84,7 @@ public class RoomDoctorServiceImpl implements RoomDoctorService {
         try {
             return roomDoctorMapper.list(roomDoctorDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(roomDoctorDO), e);
+            logger.error(roomDoctorDO.toString(), e);
         }
 
         return null;

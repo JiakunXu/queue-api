@@ -1,6 +1,5 @@
 package com.example.queue.user.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
                 throw new ServiceException(Constants.BUSINESS_FAILED, "账号或密码输入不正确");
             }
         } catch (IOException e) {
-            logger.error(JSON.toJSONString(password), e);
+            logger.error(password, e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "系统正忙，请稍后再试");
         }
 
@@ -80,7 +79,7 @@ public class UserServiceImpl implements UserService {
         try {
             userMapper.insert(userDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(userDO), e);
+            logger.error(userDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -107,7 +106,7 @@ public class UserServiceImpl implements UserService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(userDO), e);
+            logger.error(userDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -118,7 +117,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userMapper.get(userDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(userDO), e);
+            logger.error(userDO.toString(), e);
         }
 
         return null;

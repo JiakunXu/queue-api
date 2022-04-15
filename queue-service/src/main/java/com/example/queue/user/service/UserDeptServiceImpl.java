@@ -1,6 +1,5 @@
 package com.example.queue.user.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -92,7 +91,7 @@ public class UserDeptServiceImpl implements UserDeptService {
         try {
             userDeptMapper.delete(userDeptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(userDeptDO), e);
+            logger.error(userDeptDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -103,7 +102,7 @@ public class UserDeptServiceImpl implements UserDeptService {
         try {
             return userDeptMapper.count(userDeptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(userDeptDO), e);
+            logger.error(userDeptDO.toString(), e);
         }
 
         return 0;
@@ -113,7 +112,7 @@ public class UserDeptServiceImpl implements UserDeptService {
         try {
             return userDeptMapper.list(userDeptDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(userDeptDO), e);
+            logger.error(userDeptDO.toString(), e);
         }
 
         return null;

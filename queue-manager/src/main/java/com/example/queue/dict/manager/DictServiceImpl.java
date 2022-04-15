@@ -1,6 +1,5 @@
 package com.example.queue.dict.manager;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.cache.api.RedisService;
 import com.example.queue.dict.api.DictService;
 import com.example.queue.dict.api.bo.Dict;
@@ -135,7 +134,7 @@ public class DictServiceImpl implements DictService {
         try {
             dictMapper.insert(dictDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictDO), e);
+            logger.error(dictDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -162,7 +161,7 @@ public class DictServiceImpl implements DictService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictDO), e);
+            logger.error(dictDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -184,7 +183,7 @@ public class DictServiceImpl implements DictService {
         try {
             dictMapper.update1(dictDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictDO), e);
+            logger.error(dictDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -205,7 +204,7 @@ public class DictServiceImpl implements DictService {
         try {
             dictMapper.delete(dictDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictDO), e);
+            logger.error(dictDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -216,7 +215,7 @@ public class DictServiceImpl implements DictService {
         try {
             return dictMapper.list(dictDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictDO), e);
+            logger.error(dictDO.toString(), e);
         }
 
         return null;
@@ -226,7 +225,7 @@ public class DictServiceImpl implements DictService {
         try {
             return dictMapper.get(dictDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(dictDO), e);
+            logger.error(dictDO.toString(), e);
         }
 
         return null;

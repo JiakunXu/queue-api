@@ -1,6 +1,5 @@
 package com.example.queue.queue.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.dept.api.DeptService;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
@@ -95,7 +94,7 @@ public class QueueServiceImpl implements QueueService {
         try {
             queueMapper.insert(queueDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDO), e);
+            logger.error(queueDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -122,7 +121,7 @@ public class QueueServiceImpl implements QueueService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDO), e);
+            logger.error(queueDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -133,7 +132,7 @@ public class QueueServiceImpl implements QueueService {
         try {
             return queueMapper.count(queueDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDO), e);
+            logger.error(queueDO.toString(), e);
         }
 
         return 0;
@@ -143,7 +142,7 @@ public class QueueServiceImpl implements QueueService {
         try {
             return queueMapper.list(queueDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDO), e);
+            logger.error(queueDO.toString(), e);
         }
 
         return null;
@@ -153,7 +152,7 @@ public class QueueServiceImpl implements QueueService {
         try {
             return queueMapper.get(queueDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(queueDO), e);
+            logger.error(queueDO.toString(), e);
         }
 
         return null;

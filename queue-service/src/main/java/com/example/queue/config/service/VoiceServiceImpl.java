@@ -1,6 +1,5 @@
 package com.example.queue.config.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.config.api.VoiceService;
 import com.example.queue.config.api.bo.Voice;
 import com.example.queue.config.dao.dataobject.VoiceDO;
@@ -76,7 +75,7 @@ public class VoiceServiceImpl implements VoiceService {
         try {
             voiceMapper.insert(voiceDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(voiceDO), e);
+            logger.error(voiceDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -103,7 +102,7 @@ public class VoiceServiceImpl implements VoiceService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(voiceDO), e);
+            logger.error(voiceDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -123,7 +122,7 @@ public class VoiceServiceImpl implements VoiceService {
         try {
             voiceMapper.delete(voiceDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(voiceDO), e);
+            logger.error(voiceDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -134,7 +133,7 @@ public class VoiceServiceImpl implements VoiceService {
         try {
             return voiceMapper.count(voiceDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(voiceDO), e);
+            logger.error(voiceDO.toString(), e);
         }
 
         return 0;
@@ -144,7 +143,7 @@ public class VoiceServiceImpl implements VoiceService {
         try {
             return voiceMapper.list(voiceDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(voiceDO), e);
+            logger.error(voiceDO.toString(), e);
         }
 
         return null;
@@ -154,7 +153,7 @@ public class VoiceServiceImpl implements VoiceService {
         try {
             return voiceMapper.get(voiceDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(voiceDO), e);
+            logger.error(voiceDO.toString(), e);
         }
 
         return null;

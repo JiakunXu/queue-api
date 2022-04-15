@@ -1,6 +1,5 @@
 package com.example.queue.patient.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -76,7 +75,7 @@ public class PatientServiceImpl implements PatientService {
         try {
             patientMapper.insert(patientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(patientDO), e);
+            logger.error(patientDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -103,7 +102,7 @@ public class PatientServiceImpl implements PatientService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(patientDO), e);
+            logger.error(patientDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -114,7 +113,7 @@ public class PatientServiceImpl implements PatientService {
         try {
             return patientMapper.count(patientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(patientDO), e);
+            logger.error(patientDO.toString(), e);
         }
 
         return 0;
@@ -124,7 +123,7 @@ public class PatientServiceImpl implements PatientService {
         try {
             return patientMapper.list(patientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(patientDO), e);
+            logger.error(patientDO.toString(), e);
         }
 
         return null;
@@ -134,7 +133,7 @@ public class PatientServiceImpl implements PatientService {
         try {
             return patientMapper.get(patientDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(patientDO), e);
+            logger.error(patientDO.toString(), e);
         }
 
         return null;

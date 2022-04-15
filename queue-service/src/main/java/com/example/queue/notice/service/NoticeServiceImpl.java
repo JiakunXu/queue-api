@@ -1,6 +1,5 @@
 package com.example.queue.notice.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
 import com.example.queue.framework.util.BeanUtil;
@@ -80,7 +79,7 @@ public class NoticeServiceImpl implements NoticeService {
         try {
             noticeMapper.insert(noticeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(noticeDO), e);
+            logger.error(noticeDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -107,7 +106,7 @@ public class NoticeServiceImpl implements NoticeService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(noticeDO), e);
+            logger.error(noticeDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -127,7 +126,7 @@ public class NoticeServiceImpl implements NoticeService {
         try {
             noticeMapper.delete(noticeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(noticeDO), e);
+            logger.error(noticeDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -138,7 +137,7 @@ public class NoticeServiceImpl implements NoticeService {
         try {
             return noticeMapper.count(noticeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(noticeDO), e);
+            logger.error(noticeDO.toString(), e);
         }
 
         return 0;
@@ -148,7 +147,7 @@ public class NoticeServiceImpl implements NoticeService {
         try {
             return noticeMapper.list(noticeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(noticeDO), e);
+            logger.error(noticeDO.toString(), e);
         }
 
         return null;
@@ -158,7 +157,7 @@ public class NoticeServiceImpl implements NoticeService {
         try {
             return noticeMapper.get(noticeDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(noticeDO), e);
+            logger.error(noticeDO.toString(), e);
         }
 
         return null;

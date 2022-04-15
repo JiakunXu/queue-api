@@ -1,6 +1,5 @@
 package com.example.queue.app.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.app.api.AppService;
 import com.example.queue.app.api.bo.App;
 import com.example.queue.app.dao.dataobject.AppDO;
@@ -74,7 +73,7 @@ public class AppServiceImpl implements AppService {
         try {
             appMapper.insert(appDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(appDO), e);
+            logger.error(appDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -101,7 +100,7 @@ public class AppServiceImpl implements AppService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(appDO), e);
+            logger.error(appDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -112,7 +111,7 @@ public class AppServiceImpl implements AppService {
         try {
             return appMapper.count(appDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(appDO), e);
+            logger.error(appDO.toString(), e);
         }
 
         return 0;
@@ -122,7 +121,7 @@ public class AppServiceImpl implements AppService {
         try {
             return appMapper.list(appDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(appDO), e);
+            logger.error(appDO.toString(), e);
         }
 
         return null;
@@ -132,7 +131,7 @@ public class AppServiceImpl implements AppService {
         try {
             return appMapper.get(appDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(appDO), e);
+            logger.error(appDO.toString(), e);
         }
 
         return null;

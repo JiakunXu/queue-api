@@ -1,6 +1,5 @@
 package com.example.queue.schedule.service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.queue.doctor.api.DoctorService;
 import com.example.queue.framework.constant.Constants;
 import com.example.queue.framework.exception.ServiceException;
@@ -71,7 +70,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             scheduleMapper.insert(scheduleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(scheduleDO), e);
+            logger.error(scheduleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息创建失败，请稍后再试");
         }
 
@@ -98,7 +97,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         } catch (ServiceException e) {
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息不存在");
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(scheduleDO), e);
+            logger.error(scheduleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -118,7 +117,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             scheduleMapper.delete(scheduleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(scheduleDO), e);
+            logger.error(scheduleDO.toString(), e);
             throw new ServiceException(Constants.BUSINESS_FAILED, "信息更新失败，请稍后再试");
         }
 
@@ -129,7 +128,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         try {
             return scheduleMapper.list(scheduleDO);
         } catch (Exception e) {
-            logger.error(JSON.toJSONString(scheduleDO), e);
+            logger.error(scheduleDO.toString(), e);
         }
 
         return null;
