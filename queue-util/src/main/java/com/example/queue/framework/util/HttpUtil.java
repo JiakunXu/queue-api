@@ -47,7 +47,7 @@ public class HttpUtil {
 
                 @Override
                 public String handleResponse(final HttpResponse response) throws ClientProtocolException,
-                                                                          IOException {
+                        IOException {
                     int status = response.getStatusLine().getStatusCode();
                     if (status >= STATUS_CODE_200 && status < STATUS_CODE_300) {
                         HttpEntity entity = response.getEntity();
@@ -98,7 +98,7 @@ public class HttpUtil {
 
                 @Override
                 public String handleResponse(final HttpResponse response) throws ClientProtocolException,
-                                                                          IOException {
+                        IOException {
                     int status = response.getStatusLine().getStatusCode();
                     if (status >= STATUS_CODE_200 && status < STATUS_CODE_300) {
                         HttpEntity entity = response.getEntity();
@@ -136,7 +136,7 @@ public class HttpUtil {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
         try {
-            StringEntity entity = new StringEntity(parameter, Consts.UTF_8);
+            StringEntity entity = new StringEntity(parameter, ContentType.APPLICATION_JSON);
 
             HttpPost httppost = new HttpPost(uri);
             httppost.setEntity(entity);
@@ -147,7 +147,7 @@ public class HttpUtil {
 
                 @Override
                 public String handleResponse(final HttpResponse response) throws ClientProtocolException,
-                                                                          IOException {
+                        IOException {
                     int status = response.getStatusLine().getStatusCode();
                     if (status >= STATUS_CODE_200 && status < STATUS_CODE_300) {
                         HttpEntity entity = response.getEntity();
@@ -181,12 +181,12 @@ public class HttpUtil {
 
             for (Map.Entry<String, String> map : parameter0.entrySet()) {
                 multipartEntityBuilder.addTextBody(map.getKey(), map.getValue(),
-                    ContentType.APPLICATION_FORM_URLENCODED);
+                        ContentType.APPLICATION_FORM_URLENCODED);
             }
 
             for (Map.Entry<String, InputStream> map : parameter1.entrySet()) {
                 multipartEntityBuilder.addBinaryBody(map.getKey(), map.getValue(),
-                    ContentType.MULTIPART_FORM_DATA, "");
+                        ContentType.MULTIPART_FORM_DATA, "");
             }
 
             HttpPost httppost = new HttpPost(uri);
@@ -197,7 +197,7 @@ public class HttpUtil {
 
                 @Override
                 public String handleResponse(final HttpResponse response) throws ClientProtocolException,
-                                                                          IOException {
+                        IOException {
                     int status = response.getStatusLine().getStatusCode();
                     if (status >= STATUS_CODE_200 && status < STATUS_CODE_300) {
                         HttpEntity entity = response.getEntity();
@@ -230,7 +230,7 @@ public class HttpUtil {
 
                 @Override
                 public byte[] handleResponse(final HttpResponse response) throws ClientProtocolException,
-                                                                          IOException {
+                        IOException {
                     int status = response.getStatusLine().getStatusCode();
                     if (status >= STATUS_CODE_200 && status < STATUS_CODE_300) {
                         HttpEntity entity = response.getEntity();
@@ -251,7 +251,7 @@ public class HttpUtil {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
         try {
-            StringEntity entity = new StringEntity(parameter, Consts.UTF_8);
+            StringEntity entity = new StringEntity(parameter, ContentType.APPLICATION_JSON);
 
             HttpPost httppost = new HttpPost(uri);
             httppost.setEntity(entity);
@@ -261,7 +261,7 @@ public class HttpUtil {
 
                 @Override
                 public byte[] handleResponse(final HttpResponse response) throws ClientProtocolException,
-                                                                          IOException {
+                        IOException {
                     int status = response.getStatusLine().getStatusCode();
                     if (status >= STATUS_CODE_200 && status < STATUS_CODE_300) {
                         HttpEntity entity = response.getEntity();
